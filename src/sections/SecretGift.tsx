@@ -57,7 +57,7 @@ export default function SecretGift() {
     <section id="gift" className="chapter gift-section" aria-label="Hộp quà bí mật">
       <Botanical className="gift-botanical" />
       <div className="page-shell gift-layout">
-        <SectionHeading number="03" kicker={gift.kicker} title={gift.title} />
+        <SectionHeading number="04" kicker={gift.kicker} title={gift.title} />
         <div ref={sceneRef} className="gift-scene focus:outline-none" role="region" aria-label="Món quà dành cho Hai" tabIndex={-1}>
           <motion.div key={reducedMotion ? 'box-still' : 'box-motion'} className="gift-box" aria-hidden={revealing} initial={false} animate={{ opacity: revealing ? 0 : 1, scale: revealing ? .96 : 1 }} transition={{ duration: reducedMotion ? 0 : .45, ease: [.22, 1, .36, 1] }}>
             <GiftBoxArt opened={stage !== 'closed'} onOpened={() => { if (stage === 'opening') setStage('heart'); }} />

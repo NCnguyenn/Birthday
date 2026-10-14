@@ -19,12 +19,12 @@ async (page) => {
     const bounds = link.getBoundingClientRect();
     return bounds.width >= 44 && bounds.height >= 44;
   })), 'Navigation touch targets must be at least 44px');
-  for (const name of ['Kỷ niệm', 'Lời chúc', 'Món quà']) {
+  for (const name of ['Lá thư', 'Kỷ niệm', 'Lời chúc', 'Món quà']) {
     const link = nav.getByRole('link', { name, exact: true });
     const target = await link.getAttribute('href');
     check(target?.startsWith('#') && await page.locator(target).count() === 1, `Broken section link: ${name}`);
   }
-  check(await page.locator('#letter, a[href="#letter"]').count() === 0, 'The removed letter must not leave a section or navigation link');
+  check(await page.locator('#letter').count() === 1, 'The birthday letter for Chị 2 must be restored');
   for (const image of await page.locator('.hero-photo img, .photo-image img').all()) {
     await image.scrollIntoViewIfNeeded();
   }
@@ -52,6 +52,11 @@ async (page) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   check(await focusAnchor.evaluate(link => link === document.activeElement), 'Changing motion preferences must not steal focus from the reader');
+
+  await page.getByRole('button', { name: 'Mở lá thư gửi Chị 2', exact: true }).click();
+  const letter = page.getByRole('article', { name: 'Nội dung lá thư gửi Chị 2', exact: true });
+  await letter.waitFor();
+  check(await letter.getByRole('heading', { name: 'Chúc mừng sinh nhật Chị 2!', exact: true }).count() === 1, 'The opened letter must contain the birthday greeting');
 
   const photo = page.getByRole('button', { name: /^Xem ảnh:/ }).first();
   await photo.click();
@@ -106,6 +111,8 @@ async (page) => {
   check(await page.evaluate(() => performance.now()) - reducedStarted < 800, 'Reduced motion must skip the candle animation delay');
   check(await page.locator('canvas').count() === 0, 'Reduced motion must not start a confetti canvas');
   await page.getByRole('button', { name: 'Mở món quà ♡', exact: true }).click();
+  await page.getByRole('button', { name: 'Mở lá thư gửi Chị 2', exact: true }).click();
+  await page.getByRole('article', { name: 'Nội dung lá thư gửi Chị 2', exact: true }).waitFor({ timeout: 700 });
   await page.getByRole('button', { name: 'Mở món quà bí mật 🎁', exact: true }).click();
   await page.getByText('Nào Hai về quê, em đãi Hai ănnnn', { exact: true }).waitFor();
   check(await page.locator('canvas').count() === 0, 'Reduced motion must also disable gift confetti');
@@ -119,5 +126,5 @@ async (page) => {
   await page.getByRole('button', { name: 'Xem lại khoảnh khắc sinh nhật', exact: true }).click();
   await page.getByRole('button', { name: 'Thổi nến nào ♡', exact: true }).waitFor();
   check(errors.length === 0, `Browser errors: ${errors.join('; ')}`);
-  return 'PASS: candle, navigation, twelve photos, gallery/focus, wishes, gift, hug without overshoot, replay, responsive widths and reduced motion';
+  return 'PASS: candle, navigation, birthday letter, twelve photos, gallery/focus, wishes, gift, hug without overshoot, replay, responsive widths and reduced motion';
 }

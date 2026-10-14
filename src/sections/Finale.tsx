@@ -42,7 +42,7 @@ export default function Finale({ onReplay }: { onReplay: () => void }) {
       <div className="page-shell">
         <FadeIn>
           <HugScene hugging={hugging} />
-          <p className="eyebrow text-rose">04 / Một cái ôm từ xa</p>
+          <p className="eyebrow text-rose">05 / Một cái ôm từ xa</p>
           <p className="finale-copy">{finale.line1}</p>
           <h2 className="finale-title">{finale.line2}</h2>
           <p className="font-display mt-3 text-xl italic text-rose">{finale.line3}</p>

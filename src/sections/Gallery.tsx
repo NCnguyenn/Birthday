@@ -33,7 +33,7 @@ export default function Gallery() {
 
   return (
     <section id="gallery" className="chapter gallery-section" aria-label="Album kỷ niệm">
-      <SectionHeading number="01" kicker={content.gallery.kicker} title={content.gallery.title} subtitle={content.gallery.subtitle} />
+      <SectionHeading number="02" kicker={content.gallery.kicker} title={content.gallery.title} subtitle={content.gallery.subtitle} />
       <div className="page-shell gallery-grid">
         {photos.map((photo, index) => (
           <FadeIn key={photo.src} delay={(index % 3) * 0.05}>

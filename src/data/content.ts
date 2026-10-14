@@ -61,6 +61,20 @@ export const content = {
     ),
   },
 
+  letter: {
+    kicker: 'Một lá thư nhỏ',
+    title: 'Gửi Chị 2, với yêu thương',
+    greeting: 'Chị 2 yêu của em,',
+    birthday: 'Chúc mừng sinh nhật Chị 2!',
+    paragraphs: [
+      'Hôm nay là sinh nhật chị, vậy mà hai chị em mình lại ở xa nhau. Em đã nghĩ rất nhiều xem nên tặng chị điều gì, và cuối cùng em quyết định tự tay làm nên thế giới nhỏ này — nơi lưu giữ những khoảnh khắc đẹp của chúng mình.',
+      'Cảm ơn chị vì đã luôn là người chị tuyệt vời: lúc nào cũng lo cho em, nhường nhịn em, và âm thầm ở phía sau mỗi khi em cần. Có những điều em ít khi nói ra, nhưng em thật sự rất thương và rất tự hào về chị.',
+      'Tuổi mới, em chỉ mong chị luôn khỏe mạnh, cười thật nhiều, và mọi điều chị ước đều sẽ thành hiện thực. Dù khoảng cách có xa đến đâu, em vẫn luôn ở đây, thương chị thật nhiều.',
+    ],
+    sign: 'Thương Chị 2,',
+    signName: 'Em của chị ♡',
+  },
+
   gallery: {
     kicker: 'Album kỷ niệm',
     title: 'Những khoảnh khắc của chúng mình',

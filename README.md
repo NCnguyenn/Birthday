@@ -1,6 +1,6 @@
 # A Little Gift For My Sister ♡
 
-Website sinh nhật cá nhân hóa dành tặng chị gái — mở link → thổi nến → album kỷ niệm → thiệp lời chúc → hộp quà bí mật. Thiết kế theo mockup nghệ thuật đã duyệt: nền trắng hồng, màu cherry `#A44360`, chữ mận `#502E39`, ảnh gia đình dạng vòm, nét hoa và ruy băng mềm. Bánh kem, hộp quà và hai bàn tay tạo tim dùng artwork có chất liệu thật; bố cục và chữ là HTML/CSS co giãn trên điện thoại. Mục Lá thư đã bỏ theo yêu cầu, ảnh kèm thư được chuyển vào album.
+Website sinh nhật cá nhân hóa dành tặng chị gái — mở link → thổi nến → lá thư gửi Chị 2 → album kỷ niệm → thiệp lời chúc → hộp quà bí mật. Thiết kế theo mockup nghệ thuật đã duyệt: nền trắng hồng, màu cherry `#A44360`, chữ mận `#502E39`, ảnh gia đình dạng vòm, nét hoa và ruy băng mềm. Bánh kem, phong thư, hộp quà và hai bàn tay tạo tim dùng artwork có chất liệu thật; bố cục và chữ là HTML/CSS co giãn trên điện thoại.
 
 ## Chạy local
 
@@ -31,6 +31,7 @@ npm run preview     # xem bản production tại local
 - `sisterName` — tên chị (mặc định "Chị yêu")
 - `intro` / `reveal` — màn hình bánh kem & chúc mừng
 - `hero.photo` — ảnh Hero (mặc định: ba chị em bên hoa giấy)
+- `letter` — lời chúc sinh nhật gửi Chị 2, các đoạn thư và chữ ký
 - `gallery.photos` — 11 ảnh + caption; cùng ảnh hero giữ đủ 12 ảnh gốc
 - `wishes.cards` — 4 tấm thiệp
 - `gift.secretMessage` — câu nhắn xuất hiện sau hình hai bàn tay tạo tim
@@ -38,6 +39,8 @@ npm run preview     # xem bản production tại local
 - `media.music` — đã có bản Happy Birthday không lời tại `/audio/happy-birthday.mp3`; đặt `null` để ẩn nút nhạc
 
 Hộp quà mở nắp, chuyển sang ảnh hai bàn tay tạo tim, rồi hiện câu “Nào Hai về quê, em đãi Hai ănnnn” ngay trong cùng một khung. Ảnh được tải trước; nếu chưa tải xong, câu nhắn chờ ảnh. Nếu ảnh lỗi, 🫶 thay thế để phần quà tiếp tục hoạt động. Bật giảm chuyển động giữa hiệu ứng sẽ hoàn tất ngay; khung quà và focus người đọc vẫn ổn định.
+
+Lá thư nằm trong khe phong thư, phía sau mặt trước của túi giấy. Bấm mở sẽ xoay nắp trước, rồi kéo giấy lên từ bên trong để hiện “Chúc mừng sinh nhật Chị 2!”. Khi đọc, chỉ mép dưới giấy còn nằm trong phong thư; giấy không được đưa lên đè toàn bộ phong thư. Trên màn hình nhỏ có thể cuộn trong tờ giấy để đọc hết lời chúc. Nội dung đóng được ẩn khỏi bàn phím/công nghệ hỗ trợ; mở xong chỉ nhận focus nếu người đọc vẫn ở phần thư. Giảm chuyển động hoàn tất hiệu ứng ngay.
 
 Nhạc mặc định tắt theo yêu cầu hiện tại. Chạm vào trang hay dùng bàn phím sẽ giữ trang yên lặng; bấm chính nút **Happy Birthday** để nghe, bấm lại để tạm dừng. Khi bật, bản nhạc lặp lại ở âm lượng nhẹ. File nhạc nằm trong `public/audio/happy-birthday.mp3`, không cần dịch vụ nhạc bên ngoài.
 
@@ -57,7 +60,7 @@ playwright-cli -s=birthday open http://127.0.0.1:5173 --browser=chrome --mobile
 playwright-cli -s=birthday --raw run-code --filename=scripts/check-site.js
 ```
 
-Bài kiểm tra bao gồm bánh kem, điều hướng, đủ 12 ảnh đã giải mã, focus bàn phím, thiệp, quà, cái ôm không nảy vượt điểm dừng, xem lại và bố cục 320–1440px. Tùy chọn giảm chuyển động được kiểm tra cả khi bật/tắt trong lúc trang đang mở. Có thể thay URL dev bằng URL production preview.
+Bài kiểm tra bao gồm bánh kem, điều hướng, lá thư, đủ 12 ảnh đã giải mã, focus bàn phím, thiệp, quà, cái ôm không nảy vượt điểm dừng, xem lại và bố cục 320–1440px. Tùy chọn giảm chuyển động được kiểm tra cả khi bật/tắt trong lúc trang đang mở. Có thể thay URL dev bằng URL production preview.
 
 Kiểm tra ảnh phục hồi sau một yêu cầu lỗi và dừng sau đúng hai lần thử lại khi lỗi kéo dài:
 
@@ -79,6 +82,14 @@ playwright-cli -s=birthday --raw run-code --filename=scripts/check-gift-reveal.j
 
 Mockup đã duyệt: `mockups/birthday-website-artistic-v2.png`. Các ảnh chụp website sau chỉnh sửa nằm trong `mockups/rendered-refinements/`. Artwork sinh bằng ImageGen được lưu cục bộ ở `public/art/`, bản gốc và prompt ở `mockups/art-source/`. Ảnh mới `heart-hands.webp` có alpha, 900×587px, 58.7KB; prompt chính xác nằm trong `mockups/art-source/heart-hands.prompt.txt`. Khi thay ảnh bánh hoặc quà, cần căn lại vị trí ngọn lửa và phần nắp/thân trong component tương ứng.
 
+Kiểm tra lá thư xoay nắp, giấy đi lên từ sau lớp túi phong thư, vị trí mép giấy, đọc hết nội dung bằng bàn phím trên 320/390/620/1440px, focus và giảm chuyển động:
+
+```bash
+playwright-cli -s=birthday --raw run-code --filename=scripts/check-letter.js
+```
+
+Ảnh chụp thư thực tế ở `mockups/rendered-letter/`. Sprite phong thư `public/art/letter-envelope.webp` có alpha, 1024×1536px, 105.2KB; nắp và thân dùng hai vùng cắt của cùng ảnh. Bản gốc/prompt lưu cục bộ tại `mockups/art-source/letter-envelope.{png,prompt.txt}`. Nếu thay sprite, căn lại vùng cắt trong `Letter.tsx`.
+
 Thư mục `mockups/`, `.playwright-cli/` và `docs/superpowers/` lưu bản sao, ảnh kiểm tra và ghi chép cục bộ, được loại khỏi Git. Repo chứa mã nguồn, script kiểm tra và toàn bộ ảnh/nhạc cần để build website.
 
 ## Deploy lên Vercel (Hobby, miễn phí)
@@ -93,10 +104,10 @@ Thư mục `mockups/`, `.playwright-cli/` và `docs/superpowers/` lưu bản sao
 ```
 images/                 ảnh gốc (không deploy)
 public/images/          ảnh WebP tối ưu (deploy)
-public/art/             artwork bánh, hộp quà, hai bàn tay tạo tim
+public/art/             artwork bánh, phong thư, hộp quà, hai bàn tay tạo tim
 src/data/content.ts     toàn bộ nội dung cá nhân hóa
 src/data/photos.json    manifest ảnh (tự sinh)
 src/components/        Cake, Botanical/Ribbon (SVG), decor, MusicToggle, Photo
-src/sections/          Intro, Hero, Gallery, Wishes, SecretGift, Finale
+src/sections/          Intro, Hero, Letter, Gallery, Wishes, SecretGift, Finale
 src/lib/               celebrate, useReducedMotion
 ```

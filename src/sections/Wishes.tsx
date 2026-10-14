@@ -16,7 +16,7 @@ export default function Wishes() {
   };
   return (
     <section id="wishes" className="chapter wishes-section" aria-label="Những điều ước">
-      <SectionHeading number="02" kicker={content.wishes.kicker} title={content.wishes.title} subtitle={content.wishes.subtitle} />
+      <SectionHeading number="03" kicker={content.wishes.kicker} title={content.wishes.title} subtitle={content.wishes.subtitle} />
       <div className="page-shell wish-grid">
         {content.wishes.cards.map((card, index) => {
           const isOpen = flipped[index];

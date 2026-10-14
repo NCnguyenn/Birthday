@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, MotionConfig } from 'motion/react';
 import Intro from './sections/Intro';
 import Hero from './sections/Hero';
+import Letter from './sections/Letter';
 import Gallery from './sections/Gallery';
 import Wishes from './sections/Wishes';
 import SecretGift from './sections/SecretGift';
@@ -31,6 +32,7 @@ export default function App() {
                   <a href="#home" className="wordmark" aria-label="Về đầu trang">A little gift.</a>
                   <span className="eyebrow text-mauve-soft md:hidden">Từ em, với yêu thương ♡</span>
                   <nav className="site-nav" aria-label="Các phần của món quà">
+                    <a href="#letter">Lá thư</a>
                     <a href="#gallery">Kỷ niệm</a>
                     <a href="#wishes">Lời chúc</a>
                     <a href="#gift">Món quà</a>
@@ -39,6 +41,7 @@ export default function App() {
               </header>
               <main>
                 <Hero />
+                <Letter />
                 <Gallery />
                 <Wishes />
                 <SecretGift />

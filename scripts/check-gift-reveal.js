@@ -45,8 +45,8 @@ async (page) => {
   check(trace.heightChange < 1, 'Opening the gift must not shift the scene height');
   const scene = page.getByRole('region', { name: 'Món quà dành cho Hai', exact: true });
   check(await scene.evaluate(node => node.contains(document.querySelector('.gift-note')) && node.contains(document.querySelector('.gift-hands'))), 'Hands and message must appear in the same gift scene');
-  check(await page.locator('#letter, a[href="#letter"]').count() === 0, 'The entire letter section and its links must be removed');
-  check(await page.locator('.hero-photo img, .photo-image img').evaluateAll(images => new Set(images.map(image => image.getAttribute('src'))).size) === 12, 'Removing the letter must preserve all twelve original photos');
+  check(await page.locator('#letter').count() === 1, 'The restored letter must coexist with the hand-heart gift');
+  check(await page.locator('.hero-photo img, .photo-image img').evaluateAll(images => new Set(images.map(image => image.getAttribute('src'))).size) === 12, 'Restoring the letter must preserve all twelve original photos');
 
   // Hold the artwork request to prove the quote cannot outrun its photograph.
   let releaseArtwork;
@@ -104,5 +104,5 @@ async (page) => {
     check(await page.locator('.gift-note-text').evaluate(node => Number(getComputedStyle(node).opacity) > .999), 'Restoring normal motion must keep an already revealed message visible');
     check(await page.locator('.gift-note').evaluate(node => node === document.activeElement), 'Changing motion preferences must preserve focus on the message');
   }
-  return 'PASS: same-place hands then quote, no letter, twelve photos, slow/failed artwork, focus ownership and live reduced motion.';
+  return 'PASS: same-place hands then quote, restored letter, twelve photos, slow/failed artwork, focus ownership and live reduced motion.';
 }

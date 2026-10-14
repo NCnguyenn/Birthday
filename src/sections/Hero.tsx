@@ -10,7 +10,7 @@ import useReducedMotion from '../lib/useReducedMotion';
 export default function Hero() {
   const reducedMotion = useReducedMotion();
   const scrollNext = () => {
-    document.getElementById('gallery')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+    document.getElementById('letter')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
   };
   return (
     <section id="home" className="hero-section" aria-label="Chào mừng">
