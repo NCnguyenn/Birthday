@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vercel/
+.playwright-cli/
+mockups/
+/images/
+docs/superpowers/
+
+.env
+.env.*
+!.env.example
+*.local
+*.log
+*.tsbuildinfo
+Thumbs.db
+Desktop.ini
+.DS_Store
