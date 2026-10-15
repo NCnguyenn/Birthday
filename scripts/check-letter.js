@@ -69,7 +69,7 @@ async (page) => {
     return sheet.bottom - pocket.top >= 0 && sheet.bottom - pocket.top <= 32;
   }), 'The extracted sheet must sit above the envelope mouth with only its lower edge tucked inside');
 
-  for (const viewport of [{ width: 320, height: 620 }, { width: 390, height: 620 }, { width: 620, height: 900 }, { width: 1440, height: 900 }]) {
+  for (const viewport of [{ width: 320, height: 620 }, { width: 375, height: 667 }, { width: 390, height: 620 }, { width: 430, height: 932 }, { width: 620, height: 900 }, { width: 568, height: 320 }, { width: 844, height: 390 }, { width: 1440, height: 900 }]) {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setViewportSize(viewport);
     await page.goto(origin);

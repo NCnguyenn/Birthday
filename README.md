@@ -1,6 +1,8 @@
 # A Little Gift For My Sister ♡
 
-Website sinh nhật cá nhân hóa dành tặng chị gái — mở link → thổi nến → lá thư gửi Chị 2 → album kỷ niệm → thiệp lời chúc → hộp quà bí mật. Thiết kế theo mockup nghệ thuật đã duyệt: nền trắng hồng, màu cherry `#A44360`, chữ mận `#502E39`, ảnh gia đình dạng vòm, nét hoa và ruy băng mềm. Bánh kem, phong thư, hộp quà và hai bàn tay tạo tim dùng artwork có chất liệu thật; bố cục và chữ là HTML/CSS co giãn trên điện thoại.
+Website sinh nhật dành tặng Chị 2 — mở link → thổi nến → lá thư → album kỷ niệm → thiệp lời chúc → hộp quà bí mật. Nội dung ngắn, có lời cảm ơn chị đã giúp đỡ và ủng hộ em trong học tập. Giữ mẫu nghệ thuật đã duyệt: nền trắng hồng, màu cherry `#A44360`, chữ mận `#502E39`, ảnh gia đình dạng vòm, hoa và ruy băng. Khối chữ hero căn giữa, ảnh/chữ chia đều trên desktop và xếp dọc trên điện thoại. Thiệp giấy kem–blush–cherry có khung hoa, mép giấy/bóng, hover nâng nhẹ và bấm lật để đọc.
+
+UI hỗ trợ safe-area của iPhone, nút chạm tối thiểu 44–48px và chữ nội dung 14px. Khi xoay ngang trên màn hình thấp, header gọn lại; thư và quà vừa vùng đọc. Gallery dùng chiều cao động để ảnh và nút điều hướng vừa màn hình. Các hiệu ứng tôn trọng giảm chuyển động.
 
 ## Chạy local
 
@@ -28,7 +30,7 @@ npm run preview     # xem bản production tại local
 
 **Mọi chữ, caption, ảnh, lời chúc đều nằm trong [`src/data/content.ts`](src/data/content.ts)** — sửa file đó là đủ:
 
-- `sisterName` — tên chị (mặc định "Chị yêu")
+- `sisterName` — tên chị (mặc định "Chị 2")
 - `intro` / `reveal` — màn hình bánh kem & chúc mừng
 - `hero.photo` — ảnh Hero (mặc định: ba chị em bên hoa giấy)
 - `letter` — lời chúc sinh nhật gửi Chị 2, các đoạn thư và chữ ký
@@ -42,7 +44,7 @@ Hộp quà mở nắp, chuyển sang ảnh hai bàn tay tạo tim, rồi hiện 
 
 Lá thư nằm trong khe phong thư, phía sau mặt trước của túi giấy. Bấm mở sẽ xoay nắp trước, rồi kéo giấy lên từ bên trong để hiện “Chúc mừng sinh nhật Chị 2!”. Khi đọc, chỉ mép dưới giấy còn nằm trong phong thư; giấy không được đưa lên đè toàn bộ phong thư. Trên màn hình nhỏ có thể cuộn trong tờ giấy để đọc hết lời chúc. Nội dung đóng được ẩn khỏi bàn phím/công nghệ hỗ trợ; mở xong chỉ nhận focus nếu người đọc vẫn ở phần thư. Giảm chuyển động hoàn tất hiệu ứng ngay.
 
-Nhạc mặc định tắt theo yêu cầu hiện tại. Chạm vào trang hay dùng bàn phím sẽ giữ trang yên lặng; bấm chính nút **Happy Birthday** để nghe, bấm lại để tạm dừng. Khi bật, bản nhạc lặp lại ở âm lượng nhẹ. File nhạc nằm trong `public/audio/happy-birthday.mp3`, không cần dịch vụ nhạc bên ngoài.
+Nhạc mặc định bật theo yêu cầu mới nhất. Trang thử tự phát Happy Birthday ở âm lượng 30%; nếu trình duyệt chặn autoplay, lần chạm đầu tiên vào trang (hoặc Enter/Space) sẽ bắt đầu nhạc. Nút nhạc vẫn cho phát/tạm dừng. Sau khi đã phát một lần, trang bỏ các listener mở khóa; người dùng tắt nhạc thì chạm vào những phần khác sẽ giữ nhạc tắt. File nhạc nằm trong `public/audio/happy-birthday.mp3`, không cần dịch vụ nhạc bên ngoài.
 
 Tạo lại bản nhạc (cần Python và ffmpeg): `python scripts/generate-birthday-music.py`. Kiểm tra vòng đời nhạc với Chrome có cảm ứng và Vite đang chạy:
 
@@ -51,7 +53,7 @@ playwright-cli -s=birthday-music open http://127.0.0.1:5173 --browser=chrome --m
 playwright-cli -s=birthday-music run-code --filename=scripts/check-music.js
 ```
 
-Bài kiểm tra dùng âm thanh thật với chính sách cử chỉ nghiêm ngặt: kiểm tra trạng thái yên lặng ban đầu, chạm/phím ngoài nút, bật bằng nút cảm ứng hoặc Space, tạm dừng, sự kiện âm thanh, file lỗi và dọn dẹp component. Phần dọn dẹp React chạy trên Vite dev; các kiểm tra còn lại cũng dùng được với URL preview production.
+Bài kiểm tra dùng âm thanh thật với chính sách cử chỉ nghiêm ngặt: kiểm tra thử autoplay, mở khóa bằng lần chạm đầu/Enter hoặc nút nhạc/Space, không phát hai lần do click và touchend, tạm dừng được giữ nguyên, sự kiện âm thanh, file lỗi và dọn dẹp component. Phần dọn dẹp React chạy trên Vite dev; các kiểm tra còn lại cũng dùng được với URL preview production.
 
 Kiểm tra toàn bộ hành trình sinh nhật trên phiên trình duyệt đang mở trang local:
 
@@ -80,7 +82,7 @@ Kiểm tra trình tự hình tay trước câu nhắn, kích thước khung quà
 playwright-cli -s=birthday --raw run-code --filename=scripts/check-gift-reveal.js
 ```
 
-Mockup đã duyệt: `mockups/birthday-website-artistic-v2.png`. Các ảnh chụp website sau chỉnh sửa nằm trong `mockups/rendered-refinements/`. Artwork sinh bằng ImageGen được lưu cục bộ ở `public/art/`, bản gốc và prompt ở `mockups/art-source/`. Ảnh mới `heart-hands.webp` có alpha, 900×587px, 58.7KB; prompt chính xác nằm trong `mockups/art-source/heart-hands.prompt.txt`. Khi thay ảnh bánh hoặc quà, cần căn lại vị trí ngọn lửa và phần nắp/thân trong component tương ứng.
+Mockup đã duyệt: `mockups/birthday-website-artistic-v2.png`. Các ảnh chụp website sau chỉnh sửa nằm trong `mockups/rendered-refinements/` và `mockups/rendered-polish/`. Bánh, phong thư và hộp quà dùng artwork ImageGen ở `public/art/`; bản gốc/prompt lưu cục bộ tại `mockups/art-source/`. Ảnh tay `heart-hands.webp` dùng chính PNG người dùng gửi ngày 15/10, chỉ cắt khoảng trống alpha và tối ưu WebP: 900×587px, 79.4KB, giữ nền trong suốt. Bản PNG lưu cục bộ ở `mockups/art-source/heart-hands-user.png`. Khi thay ảnh bánh hoặc quà, cần căn lại vị trí ngọn lửa và phần nắp/thân trong component tương ứng.
 
 Kiểm tra lá thư xoay nắp, giấy đi lên từ sau lớp túi phong thư, vị trí mép giấy, đọc hết nội dung bằng bàn phím trên 320/390/620/1440px, focus và giảm chuyển động:
 

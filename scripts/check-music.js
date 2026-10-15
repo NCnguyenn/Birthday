@@ -4,7 +4,6 @@ async (page) => {
   const assert = (condition, message) => { if (!condition) throw new Error(message); };
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
-  await page.unroute('**/audio/happy-birthday.mp3');
   await page.unroute('**/__music_check__');
 
   // Preserve native audio playback; simulate Safari's stricter gesture policy only.
@@ -44,8 +43,8 @@ async (page) => {
     await page.waitForFunction(() => window.__musicTest.elements.length > 0);
     await control.waitFor();
     await page.bringToFront();
-    assert((await state()).attempts.length === 0, 'The page must stay silent until the music control is activated');
-    assert(await control.getAttribute('aria-pressed') === 'false', 'The initial music control must be paused');
+    assert((await state()).attempts.length > 0, 'Music must attempt autoplay by default');
+    assert(await control.getAttribute('aria-pressed') === 'false', 'Blocked autoplay must show the real paused state');
   };
   const playing = async () => {
     await page.waitForFunction(() => document.querySelector('[aria-label*="Happy Birthday"]')?.getAttribute('aria-pressed') === 'true');
@@ -81,14 +80,16 @@ async (page) => {
   assert((await state()).attempts.length === nativePausedAttempts, 'A native pause must also survive page gestures; only the music control may resume playback');
 
   await startup();
+  const touchAttempts = (await state()).attempts.length;
   await page.touchscreen.tap(80, 110);
-  assert((await state()).attempts.length === 0, 'Touching the page must not start music');
-  assert(await control.getAttribute('aria-pressed') === 'false', 'Page touch must keep music paused');
+  await playing();
+  assert((await state()).attempts.length === touchAttempts + 1, 'The first page touch must unlock music once');
 
   await startup();
+  const pageKeyAttempts = (await state()).attempts.length;
   await page.keyboard.press('Enter');
-  assert((await state()).attempts.length === 0, 'Typing outside the control must not start music');
-  assert(await control.getAttribute('aria-pressed') === 'false', 'An unrelated key must keep music paused');
+  await playing();
+  assert((await state()).attempts.length === pageKeyAttempts + 1, 'Keyboard activation must unlock default music once');
 
   await startup();
   const keyboardAttempts = (await state()).attempts.length;
@@ -97,13 +98,15 @@ async (page) => {
   await playing();
   assert((await state()).attempts.length === keyboardAttempts + 1, 'The focused control must also play once on keyboard activation');
 
-  await page.route('**/audio/happy-birthday.mp3', (route) => route.fulfill({
-    status: 200, contentType: 'audio/mpeg', body: 'unavailable audio',
-  }));
   await startup();
+  // A fresh invalid resource avoids WebKit's cache and media-request routing differences.
+  await page.evaluate(() => {
+    const audio = window.__musicTest.elements.at(-1);
+    audio.src = 'data:audio/mpeg;base64,dW5hdmFpbGFibGUgYXVkaW8=';
+    audio.load();
+  });
   await page.waitForFunction(() => document.querySelector('[aria-label*="Happy Birthday"]')?.textContent.includes('Nhạc chưa sẵn sàng'));
   assert(await control.getAttribute('aria-pressed') === 'false', 'Unavailable media must stay paused with a readable status');
-  await page.unroute('**/audio/happy-birthday.mp3');
 
   // Dev-only harness mounts the actual component to verify React teardown without a production test hook.
   const html = await (await page.request.get(origin)).text();
@@ -125,6 +128,16 @@ async (page) => {
     await page.waitForFunction(() => typeof window.__unmountMusic === 'function');
     await control.waitFor();
     await page.bringToFront();
+    const blocked = await state();
+    assert(blocked.attempts.length > 0 && blocked.audios.every(audio => audio.paused), 'The teardown harness must begin with autoplay blocked');
+    await page.evaluate(() => window.__unmountMusic());
+    await page.touchscreen.tap(80, 110);
+    await page.keyboard.press('Enter');
+    assert((await state()).attempts.length === blocked.attempts.length, 'Unmount before playback must remove every pending gesture listener');
+    await page.goto(`${origin}/__music_check__`);
+    await page.waitForFunction(() => typeof window.__unmountMusic === 'function');
+    await control.waitFor();
+    await page.bringToFront();
     await control.click();
     await playing();
     await page.evaluate(() => window.__unmountMusic());
@@ -133,10 +146,10 @@ async (page) => {
     await page.touchscreen.tap(80, 110);
     await page.keyboard.press('Enter');
     assert((await state()).attempts.length === stopped.attempts.length, 'Unmount must remove gesture listeners');
-    teardown = 'passed';
+    teardown = 'passed before and after playback';
     await page.unroute('**/__music_check__');
   }
   assert(errors.length === 0, `Music lifecycle must not throw browser errors: ${errors.join('; ')}`);
   await page.goto(origin);
-  return { silentStartup: 'passed', firstControlTap: 'passed', explicitPause: 'passed', quietPageTouch: 'passed', quietPageKey: 'passed', controlKeyboard: 'passed', mediaEvents: 'passed', unavailableAudio: 'passed', teardown };
+  return { autoplayAttempt: 'passed', firstControlTap: 'passed', explicitPause: 'passed', firstPageTouch: 'passed', firstPageKey: 'passed', controlKeyboard: 'passed', mediaEvents: 'passed', unavailableAudio: 'passed', teardown };
 }

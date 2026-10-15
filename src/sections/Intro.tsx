@@ -38,7 +38,7 @@ export default function Intro({ onEnter }: { onEnter: () => void }) {
         <AnimatePresence mode="wait">
           {phase !== 'reveal' ? (
             <motion.div key="cake" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }} className="cover-content">
-              <p className="eyebrow text-rose">Một ngày để yêu thương</p>
+              <p className="eyebrow text-rose">Sinh nhật của {content.sisterName}</p>
               <h1 className="cover-title">Happy<em>Birthday.</em></h1>
               <p className="cover-copy">{content.intro.line1}</p>
               <div className="cover-cake"><Cake state={phase === 'cake' ? 'lit' : 'blowing'} /></div>
@@ -63,7 +63,7 @@ export default function Intro({ onEnter }: { onEnter: () => void }) {
           )}
         </AnimatePresence>
       </div>
-      <footer className="page-shell cover-bottom">Một điều ước. Một món quà.<br />Rất nhiều yêu thương.</footer>
+      <footer className="page-shell cover-bottom">Chúc {content.sisterName} tuổi mới thật nhiều niềm vui!</footer>
     </div>
   );
 }

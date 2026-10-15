@@ -35,24 +35,25 @@ export interface PhotoItem {
 /*  Mọi nội dung cá nhân hóa nằm ở đây — sửa file này là đủ.           */
 /* ------------------------------------------------------------------ */
 export const content = {
-  sisterName: 'Chị yêu',
+  sisterName: 'Chị 2',
 
   intro: {
-    line1: 'Chị ơi, hôm nay là một ngày thật đặc biệt...',
-    line2: 'Hãy ước một điều trước khi thổi nến nhé!',
+    line1: 'Chúc mừng sinh nhật Chị 2!',
+    line2: 'Ước một điều rồi thổi nến nhé!',
     blowButton: 'Thổi nến nào ♡',
   },
 
   reveal: {
-    title: 'Happy Birthday, Chị yêu! ♡',
-    subtitle: 'Dù ở xa, em vẫn có một món quà nhỏ muốn gửi đến chị...',
+    title: 'Chúc mừng sinh nhật Chị 2!',
+    subtitle: 'Một món quà nhỏ em tự làm để tặng chị.',
     enterButton: 'Mở món quà ♡',
   },
 
   hero: {
-    title: 'Happy Birthday, Chị yêu! ♡',
-    subtitle: 'Một thế giới nhỏ mà em dành riêng cho chị.',
-    body: 'Dù không thể ở gần để tặng chị một món quà tận tay, em vẫn muốn tạo nên một điều đặc biệt trong ngày sinh nhật của chị.',
+    kicker: 'Dành tặng Chị 2',
+    title: 'Happy Birthday, Chị 2!',
+    subtitle: 'Chị 2 là người chị tuyệt vời nhất!',
+    body: 'Cảm ơn chị đã luôn giúp đỡ và ủng hộ em trong học tập. Website này là món quà sinh nhật em tự làm dành cho chị.',
     button: 'Khám phá món quà ♡',
     photo: photo(
       'd8745f52245ea400fd4f9.jpg',
@@ -62,16 +63,15 @@ export const content = {
   },
 
   letter: {
-    kicker: 'Một lá thư nhỏ',
-    title: 'Gửi Chị 2, với yêu thương',
-    greeting: 'Chị 2 yêu của em,',
+    kicker: 'Lời nhắn của em',
+    title: 'Gửi Chị 2',
+    greeting: 'Chị 2 ơi,',
     birthday: 'Chúc mừng sinh nhật Chị 2!',
     paragraphs: [
-      'Hôm nay là sinh nhật chị, vậy mà hai chị em mình lại ở xa nhau. Em đã nghĩ rất nhiều xem nên tặng chị điều gì, và cuối cùng em quyết định tự tay làm nên thế giới nhỏ này — nơi lưu giữ những khoảnh khắc đẹp của chúng mình.',
-      'Cảm ơn chị vì đã luôn là người chị tuyệt vời: lúc nào cũng lo cho em, nhường nhịn em, và âm thầm ở phía sau mỗi khi em cần. Có những điều em ít khi nói ra, nhưng em thật sự rất thương và rất tự hào về chị.',
-      'Tuổi mới, em chỉ mong chị luôn khỏe mạnh, cười thật nhiều, và mọi điều chị ước đều sẽ thành hiện thực. Dù khoảng cách có xa đến đâu, em vẫn luôn ở đây, thương chị thật nhiều.',
+      'Cảm ơn Chị 2 đã luôn ủng hộ em trong học tập, giúp đỡ và chỉ dẫn cho em mỗi khi cần. Với em, Chị 2 là người chị tuyệt vời nhất!',
+      'Chúc chị tuổi mới luôn khỏe mạnh, vui vẻ và công việc thuận lợi. Mong những dự định của chị đều sớm thành công. Hôm nay nhớ ăn ngon và tận hưởng sinh nhật nhé!',
     ],
-    sign: 'Thương Chị 2,',
+    sign: 'Sinh nhật vui vẻ nhé!',
     signName: 'Em của chị ♡',
   },
 
@@ -122,7 +122,7 @@ export const content = {
       ),
       photo(
         '0f3667b01fbc9fe2c6ad2.jpg',
-        'Cười thật tươi nhé, chị yêu',
+        'Cười thật tươi nhé, Chị 2',
         'Ảnh selfie nhóm bạn trẻ ngoài trời',
       ),
       photo(
@@ -139,54 +139,54 @@ export const content = {
   },
 
   wishes: {
-    kicker: 'Những điều em ước cho chị',
-    title: 'Bốn tấm thiệp nhỏ',
-    subtitle: 'Chạm vào từng tấm thiệp để mở lời chúc nhé ♡',
+    kicker: 'Chúc Chị 2 tuổi mới',
+    title: 'Bốn lời chúc gửi chị',
+    subtitle: 'Mở từng tấm thiệp để đọc nhé.',
     cards: [
       {
         icon: 'heart' as const,
         front: 'Luôn khỏe mạnh',
         backTitle: 'Chúc chị luôn khỏe mạnh',
-        back: 'Có sức khỏe là có tất cả. Tuổi mới, mong chị ăn ngon, ngủ yên, ít ốm vặt và lúc nào cũng tràn đầy năng lượng nhé!',
+        back: 'Chúc Chị 2 luôn khỏe mạnh, ăn ngon, ngủ ngon và có nhiều năng lượng để làm những điều mình thích.',
       },
       {
         icon: 'sparkles' as const,
-        front: 'Luôn hạnh phúc',
-        backTitle: 'Chúc chị luôn hạnh phúc',
-        back: 'Mong mỗi ngày của chị đều có một niềm vui nho nhỏ: một món ngon, một tin vui, hay một cái ôm ấm áp từ người thương.',
+        front: 'Vui vẻ mỗi ngày',
+        backTitle: 'Ngày nào cũng có niềm vui',
+        back: 'Chúc Chị 2 cười thật nhiều, ngày nào cũng có chuyện vui, có thời gian nghỉ ngơi và gặp gỡ bạn bè.',
       },
       {
         icon: 'star' as const,
-        front: 'Ước mơ thành hiện thực',
-        backTitle: 'Mọi ước mơ thành hiện thực',
-        back: 'Điều chị thầm ước lúc thổi nến — em tin chắc chắn sẽ thành hiện thực. Cứ dũng cảm bước tiếp, cả nhà luôn ủng hộ chị!',
+        front: 'Công việc thuận lợi',
+        backTitle: 'Thật nhiều thành công',
+        back: 'Chúc những dự định của Chị 2 sớm thành công, làm gì cũng thuận lợi. Cả nhà luôn ủng hộ chị!',
       },
       {
         icon: 'sun' as const,
-        front: 'Niềm vui & bình an',
-        backTitle: 'Thật nhiều niềm vui và bình an',
-        back: 'Mong chị đi đâu cũng gặp người tốt, làm gì cũng thuận lợi, và trong lòng lúc nào cũng nhẹ nhàng, bình yên.',
+        front: 'May mắn & bình an',
+        backTitle: 'Tuổi mới nhiều may mắn',
+        back: 'Chúc Chị 2 gặp nhiều may mắn, mọi chuyện đều ổn và có thêm nhiều kỷ niệm vui cùng gia đình. Sinh nhật vui vẻ!',
       },
     ],
   },
 
   gift: {
     kicker: 'Hộp quà bí mật',
-    title: 'Chị ơi, còn một món quà nữa đó...',
+    title: 'Còn một món quà cho Chị 2',
     button: 'Mở món quà bí mật 🎁',
     secretMessage: 'Nào Hai về quê, em đãi Hai ănnnn',
   },
 
   finale: {
-    line1: 'Dù khoảng cách có xa đến đâu...',
-    line2: 'Em vẫn luôn thương chị. ♡',
-    line3: 'Happy Birthday!',
+    line1: 'Cảm ơn Chị 2 vì luôn giúp đỡ em.',
+    line2: 'Sinh nhật vui vẻ, Chị 2!',
+    line3: 'Tuổi mới thật nhiều niềm vui nhé!',
     hugButton: 'Gửi một cái ôm ♡',
-    hugMessage: 'Một cái ôm thật chặt gửi đến chị — qua màn hình nhưng từ tận đáy lòng ♡',
+    hugMessage: 'Gửi Chị 2 một cái ôm. Nào về quê gặp nhau nhé!',
     replayButton: 'Xem lại khoảnh khắc sinh nhật',
   },
 
-  footer: 'Được làm bằng tất cả tình thương ♡ — Em của chị',
+  footer: 'Em tự làm website này tặng Chị 2.',
 
   /* Đặt null để ẩn nút nhạc. */
   media: {

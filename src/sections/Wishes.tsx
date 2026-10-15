@@ -23,18 +23,19 @@ export default function Wishes() {
           return (
             <FadeIn key={card.front} delay={index * 0.05}>
               <button type="button" onClick={() => toggle(index)} aria-label={`${isOpen ? 'Đóng' : 'Mở'} thiệp: ${card.front}`} aria-pressed={isOpen} className="wish-card">
-                <motion.span className="flip-inner relative block h-full w-full" initial={false} animate={{ rotateY: isOpen ? 180 : 0 }} transition={{ duration: reducedMotion ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }}>
+                <motion.span key={reducedMotion ? 'still' : 'motion'} className="flip-inner relative block h-full w-full" initial={false} animate={{ rotateY: isOpen ? 180 : 0 }} transition={{ duration: reducedMotion ? 0 : 0.75, ease: [0.22, 1, 0.36, 1] }}>
                   <span className="flip-face wish-face wish-front" aria-hidden={isOpen}>
-                    <span className="wish-card-number">{String(index + 1).padStart(2, '0')}</span>
-                    <Botanical kind={MOTIFS[index]} className="wish-botanical" />
+                    <span className="wish-card-top"><span className="wish-card-number">{String(index + 1).padStart(2, '0')}</span><span>Gửi {content.sisterName}</span></span>
+                    <span className="wish-emblem"><Botanical kind={MOTIFS[index]} className="wish-botanical" /></span>
                     <span className="wish-card-title">{card.front}</span>
-                    <span className="wish-card-hint">Chạm để mở ♡ <ArrowRight className="h-4 w-4" aria-hidden="true" /></span>
+                    <span className="wish-card-hint">Mở lời chúc <span className="wish-card-arrow"><ArrowRight className="h-3.5 w-3.5" aria-hidden="true" /></span></span>
                   </span>
                   <span className="flip-face wish-face wish-back" aria-hidden={!isOpen}>
                     <Botanical kind={MOTIFS[index]} className="wish-back-botanical" />
+                    <span className="wish-back-label">Gửi {content.sisterName} / {String(index + 1).padStart(2, '0')}</span>
                     <span className="wish-back-title">{card.backTitle}</span>
                     <span className="wish-back-copy">{card.back}</span>
-                    <span className="mt-3 inline-flex items-center gap-1.5 text-[9px] text-rose"><RotateCcw className="h-3 w-3" aria-hidden="true" />Chạm để úp lại</span>
+                    <span className="wish-back-hint"><RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />Chạm để úp lại</span>
                   </span>
                 </motion.span>
               </button>

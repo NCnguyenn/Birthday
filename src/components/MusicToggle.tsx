@@ -5,7 +5,7 @@ import { content } from '../data/content';
 export default function MusicToggle() {
   const src = content.media.music;
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const pausedByUser = useRef(true);
+  const pausedByUser = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
 
@@ -18,17 +18,32 @@ export default function MusicToggle() {
     setPlaying(false);
     setUnavailable(false);
 
-    const onPlay = () => setPlaying(true);
+    const gestures = ['click', 'touchend', 'keydown'] as const;
+    const onGesture = (event: Event) => {
+      if (!event.isTrusted || pausedByUser.current || audio.error || !audio.paused) return;
+      if (event.target instanceof Element && event.target.closest('.music-control')) return;
+      if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) return;
+      void audio.play().catch(() => {});
+    };
+    const removeGestures = () => gestures.forEach(type => document.removeEventListener(type, onGesture));
+    const onPlay = () => {
+      setPlaying(true);
+      removeGestures();
+    };
     const onPause = () => setPlaying(false);
     const onError = () => {
       setPlaying(false);
       setUnavailable(true);
+      removeGestures();
     };
     audio.addEventListener('play', onPlay);
     audio.addEventListener('pause', onPause);
     audio.addEventListener('error', onError);
+    gestures.forEach(type => document.addEventListener(type, onGesture, { passive: true }));
+    if (!pausedByUser.current) void audio.play().catch(() => {});
 
     return () => {
+      removeGestures();
       audio.removeEventListener('play', onPlay);
       audio.removeEventListener('pause', onPause);
       audio.removeEventListener('error', onError);

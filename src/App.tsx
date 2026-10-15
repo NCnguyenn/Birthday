@@ -30,7 +30,7 @@ export default function App() {
               <header className="site-header">
                 <div className="page-shell site-header-inner">
                   <a href="#home" className="wordmark" aria-label="Về đầu trang">A little gift.</a>
-                  <span className="eyebrow text-mauve-soft md:hidden">Từ em, với yêu thương ♡</span>
+                  <span className="eyebrow text-mauve-soft md:hidden">Dành tặng {content.sisterName}</span>
                   <nav className="site-nav" aria-label="Các phần của món quà">
                     <a href="#letter">Lá thư</a>
                     <a href="#gallery">Kỷ niệm</a>

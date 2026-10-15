@@ -92,9 +92,9 @@ async (page) => {
     requestAnimationFrame(sample);
   }));
   check(hugScale <= 1.001, `The hug heart must settle without spring overshoot (scale ${hugScale})`);
-  await page.getByText('Một cái ôm thật chặt gửi đến chị — qua màn hình nhưng từ tận đáy lòng ♡', { exact: true }).waitFor();
+  await page.getByText('Gửi Chị 2 một cái ôm. Nào về quê gặp nhau nhé!', { exact: true }).waitFor();
 
-  for (const width of [320, 360, 390, 430, 640, 768, 900, 1100, 1440]) {
+  for (const width of [320, 360, 375, 390, 430, 640, 768, 900, 960, 1100, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Horizontal overflow at ${width}px`);
     check(await nav.evaluate(el => el.getBoundingClientRect().width <= innerWidth), `Navigation overflow at ${width}px`);

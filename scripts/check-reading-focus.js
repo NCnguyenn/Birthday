@@ -1,7 +1,7 @@
 async (page) => {
   const check = (condition, message) => { if (!condition) throw new Error(message); };
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const viewport of [{ width: 390, height: 620 }, { width: 620, height: 900 }]) {
+  for (const viewport of [{ width: 568, height: 320 }, { width: 320, height: 568 }, { width: 375, height: 667 }, { width: 390, height: 620 }, { width: 430, height: 932 }, { width: 620, height: 900 }, { width: 844, height: 390 }]) {
     await page.setViewportSize(viewport);
     await page.goto('http://127.0.0.1:4173/');
     await page.getByRole('button', { name: 'Thổi nến nào ♡', exact: true }).click();
@@ -24,5 +24,5 @@ async (page) => {
       return bounds.top >= header.bottom - 1 && bounds.bottom <= innerHeight;
     }), `Both hands and message must remain visible in one scene at ${viewport.width}x${viewport.height}`);
   }
-  return 'PASS: keyboard gift reveal focuses its message and keeps hands/text visible on 390x620 and 620x900.';
+  return 'PASS: gift focus and visible hands/text on narrow phones, iPhone sizes, tablet and landscape.';
 }
