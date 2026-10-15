@@ -7,7 +7,7 @@ export default function Cake({ state }: { state: 'lit' | 'blowing' | 'out' }) {
   const id = useId().replace(/[^a-zA-Z0-9]/g, '');
   return (
     <div className="cake-art" role="img" aria-label={state === 'lit' ? 'Bánh sinh nhật với ba ngọn nến đang cháy' : 'Bánh sinh nhật với nến đã được thổi tắt'}>
-      <img src="/art/cake.webp" alt="" width={1024} height={1024} decoding="async" />
+      <img src={`${import.meta.env.BASE_URL}art/cake.webp`} alt="" width={1024} height={1024} decoding="async" />
       <svg viewBox="0 0 1024 1024" className="cake-flames" aria-hidden="true">
         <defs>
           <radialGradient id={`${id}-glow`}><stop stopColor="#ffc36c" stopOpacity=".5" /><stop offset="1" stopColor="#ffc36c" stopOpacity="0" /></radialGradient>

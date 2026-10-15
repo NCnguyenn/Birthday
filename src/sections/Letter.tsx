@@ -5,6 +5,8 @@ import { SectionHeading, focusReading } from '../components/decor';
 import Botanical from '../components/Botanical';
 import useReducedMotion from '../lib/useReducedMotion';
 
+const ENVELOPE_ART = `${import.meta.env.BASE_URL}art/letter-envelope.webp`;
+
 export default function Letter() {
   const [opened, setOpened] = useState(false);
   const [readable, setReadable] = useState(false);
@@ -42,7 +44,7 @@ export default function Letter() {
               {/* Crops and the seal mask are calibrated to the two-part 1024×1536 sprite. */}
               <svg viewBox="68 118 890 485" preserveAspectRatio="none">
                 <defs><clipPath id={`${id}-flap`}><polygon points="73 124 953 124 513 553" /><circle cx="513" cy="519" r="77" /></clipPath></defs>
-                <image href="/art/letter-envelope.webp" width="1024" height="1536" clipPath={`url(#${id}-flap)`} />
+                <image href={ENVELOPE_ART} width="1024" height="1536" clipPath={`url(#${id}-flap)`} />
               </svg>
             </div>
             <div className="envelope-paper-slot">
@@ -56,7 +58,7 @@ export default function Letter() {
                 <p className="letter-sign">{letter.sign}<br /><span>{letter.signName}</span></p>
               </article>
             </div>
-            <div className="envelope-front" aria-hidden="true"><svg viewBox="64 864 910 537" preserveAspectRatio="none"><image href="/art/letter-envelope.webp" width="1024" height="1536" /></svg></div>
+            <div className="envelope-front" aria-hidden="true"><svg viewBox="64 864 910 537" preserveAspectRatio="none"><image href={ENVELOPE_ART} width="1024" height="1536" /></svg></div>
           </div>
           {!readable && <button type="button" onClick={open} disabled={opened} aria-label="Mở lá thư gửi Chị 2" aria-expanded={opened} aria-controls={`${id}-paper`} className="letter-open">
             <span className="primary-button button-outline letter-open-label">{opened ? 'Đang mở thư…' : 'Mở lá thư ♡'}<ArrowRight className="h-4 w-4" aria-hidden="true" /></span>

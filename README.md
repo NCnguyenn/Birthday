@@ -94,7 +94,22 @@ playwright-cli -s=birthday --raw run-code --filename=scripts/check-letter.js
 
 Thư mục `mockups/`, `.playwright-cli/` và `docs/superpowers/` lưu bản sao, ảnh kiểm tra và ghi chép cục bộ, được loại khỏi Git. Repo chứa mã nguồn, script kiểm tra và toàn bộ ảnh/nhạc cần để build website.
 
-## Deploy lên Vercel (Hobby, miễn phí)
+## Deploy lên GitHub Pages
+
+Địa chỉ của website: [ncnguyenn.github.io/Birthday](https://ncnguyenn.github.io/Birthday/).
+
+Workflow `.github/workflows/deploy-pages.yml` build và deploy khi đẩy lên `main`, hoặc chạy thủ công trong tab Actions. Repository dùng Pages → Source: **GitHub Actions**. Các action chính thức được ghim theo commit; workflow dùng Node 24 và `npm ci`.
+
+```bash
+npm run build:pages
+npm run preview -- --outDir dist-pages --base=/Birthday/ --port 4175
+```
+
+Bản Pages nằm trong `dist-pages/`, dùng base `/Birthday/`. Ảnh, artwork và nhạc dùng `import.meta.env.BASE_URL` nên hoạt động cả tại Pages và tại đường dẫn gốc. `npm run build` vẫn tạo bản gốc trong `dist/` cho preview local hoặc hosting khác. Cả hai thư mục build đều không commit vào Git.
+
+Các script kiểm tra giữ nguyên đường dẫn dự án của URL đang mở; có thể chạy với preview local hoặc URL GitHub Pages.
+
+## Deploy lên Vercel (tùy chọn)
 
 1. Đẩy code lên GitHub (lưu ý ảnh riêng tư nếu repo public).
 2. Vào [vercel.com](https://vercel.com) → Add New Project → chọn repo.

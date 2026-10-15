@@ -1,6 +1,6 @@
 async (page) => {
   const check = (condition, message) => { if (!condition) throw new Error(message); };
-  const origin = page.url().split('/').slice(0, 3).join('/');
+  const origin = new URL('.', page.url()).href;
   const enter = async () => {
     await page.getByRole('button', { name: 'Thổi nến nào ♡', exact: true }).click();
     await page.getByRole('button', { name: 'Mở món quà ♡', exact: true }).click();

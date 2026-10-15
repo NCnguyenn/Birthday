@@ -5,7 +5,7 @@ async (page) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.goto(page.url().split('/').slice(0, 3).join('/'));
+  await page.goto(new URL('.', page.url()).href);
   await page.reload();
   await page.getByRole('button', { name: 'Thổi nến nào ♡', exact: true }).click();
   await page.getByRole('button', { name: 'Mở món quà ♡', exact: true }).click();

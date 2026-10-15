@@ -7,6 +7,8 @@ import Botanical from '../components/Botanical';
 import { heartBurst } from '../lib/celebrate';
 import useReducedMotion from '../lib/useReducedMotion';
 
+const GIFT_ART = `${import.meta.env.BASE_URL}art/gift.webp`;
+
 function GiftBoxArt({ opened, onOpened }: { opened: boolean; onOpened: () => void }) {
   const id = useId().replace(/[^a-zA-Z0-9]/g, '');
   const reducedMotion = useReducedMotion();
@@ -20,10 +22,10 @@ function GiftBoxArt({ opened, onOpened }: { opened: boolean; onOpened: () => voi
         <filter id={`${id}-shadow`} x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="14" /></filter>
       </defs>
       <ellipse cx="510" cy="1210" rx="375" ry="22" fill="#502e39" opacity=".12" filter={`url(#${id}-shadow)`} />
-      <image href="/art/gift.webp" width="1024" height="1280" clipPath={`url(#${id}-base)`} />
+      <image href={GIFT_ART} width="1024" height="1280" clipPath={`url(#${id}-base)`} />
       {opened && <motion.ellipse cx="530" cy="738" rx="305" ry="180" fill={`url(#${id}-light)`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: reducedMotion ? 0 : .25, duration: reducedMotion ? 0 : .7 }} />}
       <motion.g initial={false} animate={opened ? { y: 30, x: -16, rotate: -3 } : { y: 305, x: 0, rotate: 0 }} transition={{ duration: reducedMotion ? 0 : 1, ease: [.22, 1, .36, 1] }} onAnimationComplete={() => { if (opened) onOpened(); }} style={{ transformOrigin: '512px 400px' }}>
-        <image href="/art/gift.webp" width="1024" height="1280" clipPath={`url(#${id}-lid)`} />
+        <image href={GIFT_ART} width="1024" height="1280" clipPath={`url(#${id}-lid)`} />
       </motion.g>
       {opened && <motion.g initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reducedMotion ? 0 : .4, duration: reducedMotion ? 0 : .65, ease: [.22, 1, .36, 1] }} fill="#a44360" fillOpacity=".6">
         {[{ x: 380, y: 690, size: 1 }, { x: 570, y: 650, size: 1.4 }, { x: 708, y: 700, size: .8 }].map(heart => <path key={heart.x} d="M0 9S-16-6-16-16c0-7 5-11 10-11 4 0 5 2 6 5 1-3 2-5 6-5 5 0 10 4 10 11C16-6 0 9 0 9Z" transform={`translate(${heart.x} ${heart.y}) scale(${heart.size})`} />)}
@@ -63,7 +65,7 @@ export default function SecretGift() {
             <GiftBoxArt opened={stage !== 'closed'} onOpened={() => { if (stage === 'opening') setStage('heart'); }} />
           </motion.div>
           <motion.figure key={reducedMotion ? 'hands-still' : 'hands-motion'} className="gift-hands" aria-hidden={!revealing} initial={false} animate={{ opacity: revealing ? 1 : 0, y: revealing || reducedMotion ? 0 : 18, scale: revealing || reducedMotion ? 1 : .94 }} transition={{ duration: reducedMotion ? 0 : .7, ease: [.22, 1, .36, 1] }} onAnimationComplete={() => { if (revealing && stage === 'heart') setStage('message'); }}>
-            {artwork === 'error' ? <span className="gift-hands-fallback" role="img" aria-label="Hai bàn tay tạo hình trái tim">🫶</span> : <img src="/art/heart-hands.webp" alt="Hai bàn tay tạo hình trái tim" width="900" height="587" loading="eager" decoding="async" onLoad={() => setArtwork('ready')} onError={() => setArtwork('error')} />}
+            {artwork === 'error' ? <span className="gift-hands-fallback" role="img" aria-label="Hai bàn tay tạo hình trái tim">🫶</span> : <img src={`${import.meta.env.BASE_URL}art/heart-hands.webp`} alt="Hai bàn tay tạo hình trái tim" width="900" height="587" loading="eager" decoding="async" onLoad={() => setArtwork('ready')} onError={() => setArtwork('error')} />}
           </motion.figure>
           <AnimatePresence>
             {!revealing && <motion.div key="action" className="gift-action" exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : .2 }}>

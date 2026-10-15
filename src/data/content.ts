@@ -15,7 +15,7 @@ function photo(original: string, caption: string, alt: string) {
   const meta = byFile.get(original);
   // Falls back gracefully if the manifest wasn't regenerated yet.
   return {
-    src: meta ? `/images/${meta.file}` : `/images/${original}`,
+    src: `${import.meta.env.BASE_URL}images/${meta?.file ?? original}`,
     width: meta?.width ?? 1200,
     height: meta?.height ?? 1600,
     caption,
@@ -190,6 +190,6 @@ export const content = {
 
   /* Đặt null để ẩn nút nhạc. */
   media: {
-    music: '/audio/happy-birthday.mp3' as string | null, // Happy Birthday không lời, tổng hợp tại local.
+    music: `${import.meta.env.BASE_URL}audio/happy-birthday.mp3` as string | null, // Happy Birthday không lời, tổng hợp tại local.
   },
 };

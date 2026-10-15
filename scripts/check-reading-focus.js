@@ -1,9 +1,10 @@
 async (page) => {
   const check = (condition, message) => { if (!condition) throw new Error(message); };
+  const origin = new URL('.', page.url()).href;
   await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const viewport of [{ width: 568, height: 320 }, { width: 320, height: 568 }, { width: 375, height: 667 }, { width: 390, height: 620 }, { width: 430, height: 932 }, { width: 620, height: 900 }, { width: 844, height: 390 }]) {
     await page.setViewportSize(viewport);
-    await page.goto('http://127.0.0.1:4173/');
+    await page.goto(origin);
     await page.getByRole('button', { name: 'Thổi nến nào ♡', exact: true }).click();
     await page.getByRole('button', { name: 'Mở món quà ♡', exact: true }).click();
     await page.getByRole('navigation').getByRole('link', { name: 'Món quà', exact: true }).click();

@@ -1,5 +1,5 @@
 async (page) => {
-  const origin = await page.evaluate(() => location.origin);
+  const origin = new URL('.', page.url()).href;
   const assert = (condition, message) => { if (!condition) throw new Error(message); };
   const enterReveal = async () => {
     await page.goto(origin);

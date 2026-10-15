@@ -1,6 +1,6 @@
 // Run against the current local page: playwright-cli -s=birthday-music run-code --filename=scripts/check-music.js
 async (page) => {
-  const origin = await page.evaluate(() => location.origin);
+  const origin = new URL('.', page.url()).href;
   const assert = (condition, message) => { if (!condition) throw new Error(message); };
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
@@ -56,7 +56,7 @@ async (page) => {
   const initial = await state();
   assert(initial.audios.at(-1).src.endsWith('/audio/happy-birthday.mp3'), 'The control must use the bundled Happy Birthday recording');
   assert(initial.audios.slice(0, -1).every((audio) => audio.paused), 'StrictMode cleanup must stop the previous audio element');
-  const asset = await page.request.get(`${origin}/audio/happy-birthday.mp3`);
+  const asset = await page.request.get(new URL('audio/happy-birthday.mp3', origin).href);
   assert(asset.ok() && (await asset.body()).length > 10000, 'The configured music file must be available locally');
 
   await control.tap();
@@ -124,7 +124,7 @@ async (page) => {
         window.__unmountMusic = () => root.unmount();
       </script>`),
     }));
-    await page.goto(`${origin}/__music_check__`);
+    await page.goto(new URL('__music_check__', origin).href);
     await page.waitForFunction(() => typeof window.__unmountMusic === 'function');
     await control.waitFor();
     await page.bringToFront();
@@ -134,7 +134,7 @@ async (page) => {
     await page.touchscreen.tap(80, 110);
     await page.keyboard.press('Enter');
     assert((await state()).attempts.length === blocked.attempts.length, 'Unmount before playback must remove every pending gesture listener');
-    await page.goto(`${origin}/__music_check__`);
+    await page.goto(new URL('__music_check__', origin).href);
     await page.waitForFunction(() => typeof window.__unmountMusic === 'function');
     await control.waitFor();
     await page.bringToFront();
