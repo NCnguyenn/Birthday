@@ -14,18 +14,27 @@ export default function MusicToggle() {
     const audio = new Audio(src);
     audio.loop = true;
     audio.volume = 0.3;
+    audio.preload = 'auto';
     audioRef.current = audio;
     setPlaying(false);
     setUnavailable(false);
 
-    const gestures = ['click', 'touchend', 'keydown'] as const;
-    const onGesture = (event: Event) => {
-      if (!event.isTrusted || pausedByUser.current || audio.error || !audio.paused) return;
-      if (event.target instanceof Element && event.target.closest('.music-control')) return;
-      if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) return;
+    const tryPlay = () => {
+      if (pausedByUser.current || audio.error || !audio.paused) return;
       void audio.play().catch(() => {});
     };
-    const removeGestures = () => gestures.forEach(type => document.removeEventListener(type, onGesture));
+
+    const gestures = ['click', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'keydown', 'scroll'] as const;
+    const onGesture = (event: Event) => {
+      if (pausedByUser.current || audio.error) return;
+      if (event.target instanceof Element && event.target.closest('.music-control')) return;
+      if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) return;
+      tryPlay();
+    };
+    const removeGestures = () => gestures.forEach(type => {
+      window.removeEventListener(type, onGesture, true);
+      document.removeEventListener(type, onGesture, true);
+    });
     const onPlay = () => {
       setPlaying(true);
       removeGestures();
@@ -36,14 +45,23 @@ export default function MusicToggle() {
       setUnavailable(true);
       removeGestures();
     };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && !pausedByUser.current) tryPlay();
+    };
+
     audio.addEventListener('play', onPlay);
     audio.addEventListener('pause', onPause);
     audio.addEventListener('error', onError);
-    gestures.forEach(type => document.addEventListener(type, onGesture, { passive: true }));
-    if (!pausedByUser.current) void audio.play().catch(() => {});
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    gestures.forEach(type => {
+      window.addEventListener(type, onGesture, { capture: true, passive: true });
+      document.addEventListener(type, onGesture, { capture: true, passive: true });
+    });
+    if (!pausedByUser.current) tryPlay();
 
     return () => {
       removeGestures();
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       audio.removeEventListener('play', onPlay);
       audio.removeEventListener('pause', onPause);
       audio.removeEventListener('error', onError);

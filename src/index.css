@@ -149,15 +149,15 @@
 .wishes-section .section-heading { text-align: center; }
 .wishes-section .section-title, .wishes-section .section-subtitle { margin-inline: auto; }
 .wish-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
-.wish-card { perspective: 1600px; display: block; height: 370px; width: 100%; border-radius: 16px; text-align: left; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+.wish-card { perspective: 1600px; display: block; height: 370px; width: 100%; border-radius: 16px; text-align: left; transition: transform .3s cubic-bezier(.22, 1, .36, 1); touch-action: pan-y; }
 .wish-card:active { transform: scale(.985); }
 .flip-inner { transform-style: preserve-3d; }
 .flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-.wish-face { --card-ink: #502e39; --card-accent: #a44360; --card-line: #a443603b; --card-tint: #f7e8eb; position: absolute; inset: 0; display: flex; flex-direction: column; border: 1px solid var(--card-line); border-radius: 16px; padding: 24px; color: var(--card-ink); background: radial-gradient(#502e390d .5px, transparent .7px) 0 0 / 4px 4px, linear-gradient(145deg, #fffdf7, #fbf1ed); box-shadow: 0 3px 0 #e3c7ce, 0 16px 30px -14px #502e394d, inset 0 1px 0 #fff; transition: box-shadow .3s; }
+.wish-face { --card-ink: #502e39; --card-accent: #a44360; --card-line: #a443603b; --card-tint: #f7e8eb; position: absolute; inset: 0; display: flex; flex-direction: column; border: 1px solid var(--card-line); border-radius: 16px; padding: 24px; color: var(--card-ink); background: radial-gradient(#502e390d .5px, transparent .7px) 0 0 / 4px 4px, linear-gradient(145deg, #fffdf7, #fbf1ed); box-shadow: 0 3px 0 #e3c7ce, 0 16px 30px -14px #502e394d, inset 0 1px 0 #fff; transition: box-shadow .3s; touch-action: pan-y; }
 .wish-face::before { content: ''; position: absolute; inset: 8px; border: 1px solid var(--card-line); border-radius: 10px; pointer-events: none; }
 .wish-grid > div:nth-child(2) .wish-front { background: radial-gradient(#502e390d .5px, transparent .7px) 0 0 / 4px 4px, linear-gradient(145deg, #fbf1f0, #f0d4dd); }
 .wish-grid > div:nth-child(4) .wish-front { --card-ink: #fff9f2; --card-accent: #f7debf; --card-line: #fff9f24d; --card-tint: #ffffff0a; background: radial-gradient(#fff9f211 .5px, transparent .7px) 0 0 / 4px 4px, linear-gradient(145deg, #a44360, #84344e); box-shadow: 0 3px 0 #6e2940, 0 16px 30px -14px #502e394d, inset 0 1px 0 #ffffff3b; }
-.wish-front { align-items: center; text-align: center; overflow: hidden; }
+.wish-front { align-items: center; text-align: center; overflow: hidden; touch-action: pan-y; }
 .wish-card-top { position: relative; display: flex; align-items: center; justify-content: space-between; width: 100%; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--card-accent); }
 .wish-card-number { font-family: var(--font-display); font-size: 24px; font-style: italic; line-height: 1; letter-spacing: -.04em; }
 .wish-emblem { position: relative; display: flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 120px; height: 142px; margin: 16px auto; border: 1px solid var(--card-line); border-radius: 50%; background: var(--card-tint); }
@@ -166,7 +166,7 @@
 .wish-card-title { position: relative; max-width: 230px; font-family: var(--font-display); font-size: 28px; font-weight: 500; line-height: 1.25; color: var(--card-ink); text-wrap: balance; }
 .wish-card-hint { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--card-line); font-size: 12px; color: var(--card-accent); }
 .wish-card-arrow { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid var(--card-line); border-radius: 50%; transition: transform .3s; }
-.wish-back { text-align: left; transform: rotateY(180deg); overflow-y: auto; overscroll-behavior: contain; }
+.wish-back { text-align: left; transform: rotateY(180deg); overflow: hidden; touch-action: pan-y; }
 .wish-back-botanical { position: absolute; width: 95px; right: 4px; top: 18px; opacity: .16; color: var(--color-rose); }
 .wish-back-label { position: relative; font-size: 9px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--color-rose); }
 .wish-back-title { position: relative; margin-top: 24px; font-family: var(--font-display); font-size: 25px; font-weight: 500; line-height: 1.35; color: var(--color-rose-deep); text-wrap: balance; }
@@ -217,6 +217,23 @@
 @keyframes smoke-rise { 0% { transform: translateY(5px) scaleX(.5); opacity: 0; } 25% { opacity: .4; } 100% { transform: translateY(-25px) scaleX(1.2); opacity: 0; } }
 @keyframes flicker { 0%, 100% { transform: scale(1) skewX(0deg); } 50% { transform: scale(.96, .9) skewX(-2deg); } }
 @keyframes blow-out { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(.15, .4) translateX(20px); opacity: 0; } }
+@keyframes float-gentle { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-7px) rotate(1.2deg); } }
+@keyframes float-reverse { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(7px) rotate(-1.2deg); } }
+@keyframes spark-drift { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 33% { transform: translate(10px, -14px) rotate(7deg); } 66% { transform: translate(-8px, 10px) rotate(-5deg); } }
+@keyframes spark-drift-rev { 0%, 100% { transform: translate(0, 0) rotate(0deg); } 33% { transform: translate(-12px, 12px) rotate(-8deg); } 66% { transform: translate(8px, -10px) rotate(6deg); } }
+
+.botanical { animation: float-gentle 8s ease-in-out infinite; transform-origin: center; }
+.letter-botanical { animation: float-reverse 9s ease-in-out infinite; }
+.ribbon { animation: float-reverse 10s ease-in-out infinite; }
+
+.floating-sparks-container { position: fixed; inset: 0; pointer-events: none; z-index: 12; overflow: hidden; }
+.spark { position: absolute; user-select: none; opacity: .45; filter: drop-shadow(0 2px 4px #502e3914); }
+.spark-1 { top: 14%; left: 6%; animation: spark-drift 12s ease-in-out infinite; font-size: 19px; }
+.spark-2 { top: 26%; right: 7%; animation: spark-drift-rev 11s ease-in-out infinite; font-size: 16px; }
+.spark-3 { top: 46%; left: 4%; animation: spark-drift 14s ease-in-out infinite 1.5s; font-size: 18px; }
+.spark-4 { top: 64%; right: 6%; animation: spark-drift-rev 13s ease-in-out infinite .8s; font-size: 20px; }
+.spark-5 { top: 82%; left: 8%; animation: spark-drift 12s ease-in-out infinite 2.5s; font-size: 17px; }
+.spark-6 { top: 92%; right: 10%; animation: spark-drift-rev 14s ease-in-out infinite 1.8s; font-size: 21px; }
 
 @media (hover: hover) {
   .primary-button:hover { background: var(--color-rose-deep); }

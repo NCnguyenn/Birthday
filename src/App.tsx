@@ -11,6 +11,21 @@ import MusicToggle from './components/MusicToggle';
 import { content } from './data/content';
 import useReducedMotion from './lib/useReducedMotion';
 
+function FloatingSparks() {
+  const reducedMotion = useReducedMotion();
+  if (reducedMotion) return null;
+  return (
+    <div className="floating-sparks-container" aria-hidden="true">
+      <span className="spark spark-1">🌸</span>
+      <span className="spark spark-2">✨</span>
+      <span className="spark spark-3">💖</span>
+      <span className="spark spark-4">🌷</span>
+      <span className="spark spark-5">✨</span>
+      <span className="spark spark-6">🌸</span>
+    </div>
+  );
+}
+
 export default function App() {
   const [entered, setEntered] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -23,6 +38,7 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="never" transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1], scale: { duration: reducedMotion ? 0 : 0.16 } }}>
       <div className={`birthday-app min-h-dvh${entered ? ' is-entered' : ''}`}>
+        <FloatingSparks />
           {!entered ? (
             <Intro onEnter={() => setEntered(true)} />
           ) : (

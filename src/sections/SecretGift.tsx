@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { content } from '../data/content';
-import { SectionHeading, focusReading } from '../components/decor';
+import { SectionHeading, FadeIn, focusReading } from '../components/decor';
 import Botanical from '../components/Botanical';
 import { heartBurst } from '../lib/celebrate';
 import useReducedMotion from '../lib/useReducedMotion';
@@ -60,24 +60,26 @@ export default function SecretGift() {
       <Botanical className="gift-botanical" />
       <div className="page-shell gift-layout">
         <SectionHeading number="04" kicker={gift.kicker} title={gift.title} />
-        <div ref={sceneRef} className="gift-scene focus:outline-none" role="region" aria-label="Món quà dành cho Hai" tabIndex={-1}>
-          <motion.div key={reducedMotion ? 'box-still' : 'box-motion'} className="gift-box" aria-hidden={revealing} initial={false} animate={{ opacity: revealing ? 0 : 1, scale: revealing ? .96 : 1 }} transition={{ duration: reducedMotion ? 0 : .45, ease: [.22, 1, .36, 1] }}>
-            <GiftBoxArt opened={stage !== 'closed'} onOpened={() => { if (stage === 'opening') setStage('heart'); }} />
-          </motion.div>
-          <motion.figure key={reducedMotion ? 'hands-still' : 'hands-motion'} className="gift-hands" aria-hidden={!revealing} initial={false} animate={{ opacity: revealing ? 1 : 0, y: revealing || reducedMotion ? 0 : 18, scale: revealing || reducedMotion ? 1 : .94 }} transition={{ duration: reducedMotion ? 0 : .7, ease: [.22, 1, .36, 1] }} onAnimationComplete={() => { if (revealing && stage === 'heart') setStage('message'); }}>
-            {artwork === 'error' ? <span className="gift-hands-fallback" role="img" aria-label="Hai bàn tay tạo hình trái tim">🫶</span> : <img src={`${import.meta.env.BASE_URL}art/heart-hands.webp`} alt="Hai bàn tay tạo hình trái tim" width="900" height="587" loading="eager" decoding="async" onLoad={() => setArtwork('ready')} onError={() => setArtwork('error')} />}
-          </motion.figure>
-          <AnimatePresence>
-            {!revealing && <motion.div key="action" className="gift-action" exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : .2 }}>
-              <motion.button type="button" whileTap={{ scale: .97 }} onClick={open} disabled={stage !== 'closed'} className="primary-button">
-                {stage === 'closed' ? gift.button : 'Một chút bất ngờ…'}<ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </motion.button>
-            </motion.div>}
-          </AnimatePresence>
-          {stage === 'message' && <p ref={node => { if (node) noteMounted.current = true; if (document.activeElement === sceneRef.current) focusReading(node); }} tabIndex={-1} className="gift-note focus:outline-none">
-            <motion.span key={reducedMotion ? 'note-still' : 'note-motion'} className="gift-note-text block" initial={reducedMotion || noteMounted.current ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reducedMotion ? 0 : .16, duration: reducedMotion ? 0 : .5, ease: [.22, 1, .36, 1] }}>{gift.secretMessage}</motion.span>
-          </p>}
-        </div>
+        <FadeIn delay={0.12} y={35}>
+          <div ref={sceneRef} className="gift-scene focus:outline-none" role="region" aria-label="Món quà dành cho Hai" tabIndex={-1}>
+            <motion.div key={reducedMotion ? 'box-still' : 'box-motion'} className="gift-box" aria-hidden={revealing} initial={false} animate={{ opacity: revealing ? 0 : 1, scale: revealing ? .96 : 1 }} transition={{ duration: reducedMotion ? 0 : .45, ease: [.22, 1, .36, 1] }}>
+              <GiftBoxArt opened={stage !== 'closed'} onOpened={() => { if (stage === 'opening') setStage('heart'); }} />
+            </motion.div>
+            <motion.figure key={reducedMotion ? 'hands-still' : 'hands-motion'} className="gift-hands" aria-hidden={!revealing} initial={false} animate={{ opacity: revealing ? 1 : 0, y: revealing || reducedMotion ? 0 : 18, scale: revealing || reducedMotion ? 1 : .94 }} transition={{ duration: reducedMotion ? 0 : .7, ease: [.22, 1, .36, 1] }} onAnimationComplete={() => { if (revealing && stage === 'heart') setStage('message'); }}>
+              {artwork === 'error' ? <span className="gift-hands-fallback" role="img" aria-label="Hai bàn tay tạo hình trái tim">🫶</span> : <img src={`${import.meta.env.BASE_URL}art/heart-hands.webp`} alt="Hai bàn tay tạo hình trái tim" width="900" height="587" loading="eager" decoding="async" onLoad={() => setArtwork('ready')} onError={() => setArtwork('error')} />}
+            </motion.figure>
+            <AnimatePresence>
+              {!revealing && <motion.div key="action" className="gift-action" exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : .2 }}>
+                <motion.button type="button" whileTap={{ scale: .97 }} onClick={open} disabled={stage !== 'closed'} className="primary-button">
+                  {stage === 'closed' ? gift.button : 'Một chút bất ngờ…'}<ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </motion.button>
+              </motion.div>}
+            </AnimatePresence>
+            {stage === 'message' && <p ref={node => { if (node) noteMounted.current = true; if (document.activeElement === sceneRef.current) focusReading(node); }} tabIndex={-1} className="gift-note focus:outline-none">
+              <motion.span key={reducedMotion ? 'note-still' : 'note-motion'} className="gift-note-text block" initial={reducedMotion || noteMounted.current ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: reducedMotion ? 0 : .16, duration: reducedMotion ? 0 : .5, ease: [.22, 1, .36, 1] }}>{gift.secretMessage}</motion.span>
+            </p>}
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
